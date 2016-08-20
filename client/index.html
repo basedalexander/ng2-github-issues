@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/">
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+    <!--<script src="node_modules/es6-shim/es6-shim.min.js"></script>-->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <script src="app/systems.config.js"></script>
+
+    <script>
+        System.import('app').catch(function (err) {
+            throw new Error(err);
+        });
+    </script>
+
+    <app>Loading...</app>
+</body>
+</html>

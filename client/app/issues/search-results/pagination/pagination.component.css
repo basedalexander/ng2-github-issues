@@ -1,0 +1,31 @@
+.page-current {
+	font-weight: bold;
+}
+
+.pagination-control-btn {
+	color: #ccc;
+	cursor: default;
+}
+
+.pagination-control-btn:hover {
+	z-index: 2;
+	color: #ccc;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+.pagination-control-btn.available {
+	color: #337ab7;
+	cursor: pointer;
+}
+
+.pagination-control-btn.available:hover {
+	z-index: 2;
+	color: #23527c;
+	background-color: #eee;
+	border-color: #ddd;
+}
+
+.pagination-page {
+	cursor: pointer;
+}

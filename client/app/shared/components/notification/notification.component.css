@@ -1,0 +1,26 @@
+.notification-box {
+    display: inline-block;
+    margin-top: 20px;
+    border-width: 10px;
+    border-left-style: solid;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.notification-success {
+    border-color: #2b542c;
+    background-color: #1B9A59;
+    color: #fff;
+}
+
+.notification-warning {
+    border-color: #985f0d;
+    background-color: #f5e79e;
+    color: #3c3c3c;
+}
+
+.notification-error {
+    border-color: #761c19;
+    background-color: #ce8483;
+    color: #fff;
+}

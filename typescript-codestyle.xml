@@ -1,0 +1,14 @@
+<code_scheme name="Storm-TypeScript-Code-Style">
+  <TypeScriptCodeStyleSettings>
+    <option name="SPACE_AFTER_TYPE_COLON" value="true" />
+    <option name="REFORMAT_C_STYLE_COMMENTS" value="false" />
+    <option name="USE_DOUBLE_QUOTES" value="false" />
+    <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
+    <option name="SPACES_WITHIN_IMPORTS" value="true" />
+    <option name="USE_CHAINED_CALLS_GROUP_INDENTS" value="true" />
+  </TypeScriptCodeStyleSettings>
+  <codeStyleSettings language="TypeScript">
+    <option name="LINE_COMMENT_ADD_SPACE" value="false" />
+    <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+  </codeStyleSettings>
+</code_scheme>
