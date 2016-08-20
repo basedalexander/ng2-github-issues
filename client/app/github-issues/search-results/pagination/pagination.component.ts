@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { ILink } from '../../../common/services/headers-parser.service';
-import { PaginationService } from './pagination.service';
+import { PaginationService, FIRST_PAGE } from './pagination.service';
 
 @Component({
     selector: 'pagination',
@@ -17,7 +17,7 @@ import { PaginationService } from './pagination.service';
             aria-label="First"
             class="pagination-control-btn"
             [class.available]="isPrevAvailable()"
-            (click)="isPrevAvailable() && goFirst()"
+            (click)="onFirstClicked()"
             title="First page">
             <span aria-hidden="true">&laquo;</span>
           </a>
@@ -28,7 +28,7 @@ import { PaginationService } from './pagination.service';
             aria-label="Previous"
             class="pagination-control-btn"
             [class.available]="isPrevAvailable()"
-            (click)="isPrevAvailable() && goPrev()"
+            (click)="onPrevClicked()"
             title="Prev page">
             <span aria-hidden="true">&larr;</span>
           </a>
@@ -50,7 +50,7 @@ import { PaginationService } from './pagination.service';
             aria-label="Next"
             class="pagination-control-btn"
             [class.available]="isNextAvailable()"
-            (click)="isNextAvailable() && goNext()"
+            (click)="onNextClicked()"
             title="Next page">
             <span aria-hidden="true">&rarr;</span>
           </a>
@@ -61,7 +61,7 @@ import { PaginationService } from './pagination.service';
             aria-label="Last"
             class="pagination-control-btn"
             [class.available]="isNextAvailable()"
-            (click)="isNextAvailable() && goLast()"
+            (click)="onLastClicked()"
             title="Last page">
             <span aria-hidden="true">&raquo;</span>
           </a>
@@ -74,6 +74,7 @@ import { PaginationService } from './pagination.service';
 export class PaginationComponent {
 
     @Input() set link(value: ILink) {
+
         this.init(value);
     }
 
@@ -82,24 +83,17 @@ export class PaginationComponent {
     constructor(private paginationService: PaginationService) {
     }
 
+    private firstPage: number;
+    private lastPage: number;
     private currentPage: number;
     private pager: number[] = [];
 
     private init(link: ILink): void {
         this.currentPage = this.paginationService.getCurrentPage(link);
         this.pager = this.paginationService.generatePager(link);
-    }
 
-    protected goNext(): void {
-        this.goToPage(this.currentPage + 1);
-    }
-
-    protected goPrev(): void {
-        this.goToPage(this.currentPage - 1);
-    }
-
-    protected goFirst(): void {
-        this.goToPage(this.pager[0]);
+        this.firstPage = FIRST_PAGE;
+        this.lastPage = this.paginationService.getLastPage(link);
     }
 
     protected isPageCurrent(pageNum: number): boolean {
@@ -114,8 +108,44 @@ export class PaginationComponent {
         return this.paginationService.isNextAvailable(this.pager, this.currentPage);
     }
 
-    protected goLast(): void {
-        this.goToPage(this.pager[this.pager.length - 1]);
+    protected onFirstClicked(): void {
+        if (this.isPrevAvailable()) {
+            this.goFirst();
+        }
+    }
+
+    protected onLastClicked(): void {
+        if (this.isNextAvailable()) {
+            this.goLast();
+        }
+    }
+
+    protected onNextClicked(): void {
+        if (this.isNextAvailable()) {
+            this.goNext();
+        }
+    }
+
+    protected onPrevClicked(): void {
+        if (this.isPrevAvailable()) {
+            this.goPrev();
+        }
+    }
+
+    private goNext(): void {
+        this.goToPage(this.currentPage + 1);
+    }
+
+    private goPrev(): void {
+        this.goToPage(this.currentPage - 1);
+    }
+
+    private goFirst(): void {
+        this.goToPage(this.firstPage);
+    }
+
+    private goLast(): void {
+        this.goToPage(this.lastPage);
     }
 
     private goToPage(pageNum: number): void {

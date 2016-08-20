@@ -5,7 +5,7 @@ import { isBlank } from 'common/utils';
 
 const PAGER_LENGTH: number = 10;
 const PAGER_MIDDLE: number = PAGER_LENGTH / 2;
-const FIRST_PAGE: number =  1;
+export const FIRST_PAGE: number = 1;
 
 export type PagerType = number[];
 
@@ -20,13 +20,13 @@ export class PaginationService {
         }
 
         let lastPage: number = this.getLastPage(link);
-        let currentPage: number  = this.getCurrentPage(link);
+        let currentPage: number = this.getCurrentPage(link);
 
         let diffLast: number = lastPage - currentPage;
         let diffFirst: number = currentPage - FIRST_PAGE;
 
         // Case 1: Current page in the middle
-        if (diffFirst > PAGER_MIDDLE && PAGER_MIDDLE < diffLast) {
+        if ((diffFirst > PAGER_MIDDLE) && (PAGER_MIDDLE < diffLast)) {
             let pagerFirstPage: number = currentPage - PAGER_MIDDLE;
 
             for (let i = 0, page = pagerFirstPage; i < PAGER_LENGTH; i++, page++) {
@@ -35,8 +35,23 @@ export class PaginationService {
         }
 
         // Case 2: There are just 10 pages.
-        else if ( (diffFirst <= PAGER_MIDDLE) || (diffFirst + diffLast) < PAGER_LENGTH) {
-            for (let i = FIRST_PAGE; i <= PAGER_LENGTH; i++) {
+        else if ((diffFirst <= PAGER_MIDDLE) || (diffFirst + diffLast) < PAGER_LENGTH) {
+            let length: number = (PAGER_LENGTH < lastPage) ? PAGER_LENGTH : lastPage;
+
+            for (let pageNum = FIRST_PAGE; pageNum <= length; pageNum++) {
+                pager.push(pageNum);
+            }
+        }
+
+        // Case 3: Near the last page
+        else if (diffLast < PAGER_MIDDLE) {
+            let firstInPager: number = (currentPage - (PAGER_LENGTH - diffLast )) + 1;
+
+            if (firstInPager < FIRST_PAGE) {
+                firstInPager = FIRST_PAGE;
+            }
+
+            for (let i = firstInPager; i <= lastPage; i++) {
                 pager.push(i);
             }
         }
@@ -65,7 +80,7 @@ export class PaginationService {
         return pager.indexOf(currentPage) !== (pager.length - 1);
     }
 
-    private getLastPage(link: ILink): number {
+    getLastPage(link: ILink): number {
         return link.last || link.prev + 1;
     }
 }

@@ -136,9 +136,49 @@ describe('PaginationService', () => {
                 next: 19,
                 last: PAGES_NUM
             };
-            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(10));
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(11));
         });
 
+        it(`for the 19st page of ${PAGES_NUM}`, () => {
+            link = {
+                prev: 18,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(11));
+        });
+
+        it(`for the 20st page of ${PAGES_NUM}`, () => {
+            link = {
+                prev: 19,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(11));
+        });
+
+    });
+
+    describe('generatePager within random amount of pages', () => {
+        let link: ILink;
+
+        it(`for the 5th page of 6 pages  `, () => {
+            link = {
+                next: 6,
+                last: 6
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1, 6));
+        });
+
+        it(`for the 1th page of 31 pages  `, () => {
+            link = {
+                next: 3,
+                last: 6
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1, 6));
+        });
+
+        it(`should return empty pager if link is undefined`, () => {
+            expect(paginationService.generatePager(undefined)).toEqual([]);
+        });
     });
 
     describe('isPrevAvailable', () => {
@@ -170,11 +210,11 @@ describe('PaginationService', () => {
     });
 });
 
-function createArrayOfNumbers(num: number, length: number = 10): number[] {
+function createArrayOfNumbers(startFrom: number, length: number = 10): number[] {
     let arr = [];
-    let startNumber: number = num;
+    let startNumber: number = startFrom;
 
-    for ( let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
         arr.push(startNumber++);
     }
 

@@ -36,7 +36,8 @@ export interface IRepository {
             class="form-control"
             (focus)="searchForSuggestion(user.value)"
             (keyup)="searchForSuggestion(user.value)"
-            placeholder="User">
+            placeholder="User"
+            autocomplete="off">
       </div>
       
       <div class="form-group">
@@ -47,7 +48,8 @@ export interface IRepository {
             name="reposName"
             type="text"
             class="form-control"
-            placeholder="Repository">
+            placeholder="Repository"
+            autocomplete="off">
       </div>
       
       <button (click)="submitSearch()" class="btn btn-default">Search</button>
