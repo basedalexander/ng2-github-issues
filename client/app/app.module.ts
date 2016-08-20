@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { GithubIssuesComponent } from './github-issues/issues.component';
+import { GithubIssueDetailsComponent } from './github-issue-details/github-issue-details.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { GithubIssuesComponent } from './github-issues/issues.component';
     ],
     declarations: [
         AppComponent,
-        GithubIssuesComponent
+        GithubIssuesComponent,
+        GithubIssueDetailsComponent
     ],
     bootstrap: [AppComponent]
 })

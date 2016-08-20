@@ -13,6 +13,7 @@ import { appRouterProviders } from './app.routes';
 @Component({
     selector: 'app',
     template: `
+    <a routerLink="dick-big" routerLinkActive="active">dick</a>
     <div>
         <router-outlet></router-outlet>
     </div>
