@@ -1,6 +1,5 @@
 import {
     Component,
-    Input,
     Output,
     EventEmitter
 } from '@angular/core';
@@ -36,6 +35,7 @@ export interface IRepository {
             class="form-control"
             (focus)="searchForSuggestion(user.value)"
             (keyup)="searchForSuggestion(user.value)"
+            (blur)="onUserFieldBlur()"
             placeholder="User"
             autocomplete="off">
       </div>
@@ -102,20 +102,20 @@ export class SearchBoxComponent {
     }
 
     ngOnInit() {
-        this.searchData = this.SEARCH_DATA_DEFAULT;
+        this.searchData = this.DEFAULT_SEARCH_DATA;
         this.onSearchDataChanged();
     }
 
-    protected SEARCH_DATA_DEFAULT: ISearchData = {
-        user: 'thohoh',
-        repo: 'metadata'
+    protected DEFAULT_SEARCH_DATA: ISearchData = {
+        user: 'angular',
+        repo: 'angular'
     };
 
     protected suggestions: IRepository[] = [];
 
     protected selectRepo(repoName: string): void {
-        this.clearSuggestions();
         this.searchData.repo = repoName;
+        this.clearSuggestions();
     }
 
     protected submitSearch(): void {
@@ -123,7 +123,7 @@ export class SearchBoxComponent {
     }
 
     protected onSearchDataChanged(): void {
-         this.searchDataChanged.emit(this.searchData);
+        this.searchDataChanged.emit(this.searchData);
     }
 
     protected searchForSuggestion(user: string): void {
@@ -136,17 +136,20 @@ export class SearchBoxComponent {
             .subscribe(
                 data => {
                     this.suggestions = data;
-                    this.logger.log(data);
                 },
-                () => {
+                error => {
                     this.suggestions = [];
-                    this.showError();
+                    this.showError(`Can't load repository list`, error.stack);
                 }
             );
     }
 
-    protected showError(): void {
-        this.logger.error(`Can't load repository list`);
+    protected onUserFieldBlur(): void {
+        setTimeout(() => this.clearSuggestions(), 500);
+    }
+
+    protected showError(message: string, stack: string): void {
+        this.logger.error(message, stack);
     }
 
     private clearSuggestions(): void {

@@ -49,69 +49,7 @@ import { SearchResultsService } from './search.results.service';
     `,
     directives: [PaginationComponent, SpinnerComponent],
     providers: [SearchResultsService],
-    styles: [
-        `
-    .issues-header,
-    .issue-list_item {
-        padding: 8px 15px;
-    }
-
-    .issues-header {
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-    }
-    
-    .issue-list{
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-    
-    .issue-list_item {
-        border: 1px solid #ccc;
-    }
-
-    .issue-status,
-    .issue-preview {
-        display: inline-block;
-    }
-    
-    .issue-status {
-        vertical-align: top;
-        margin-right: 10px;
-        color: #4cae4c;
-    }
-    
-    .issue-preview_header {
-        margin-top: 0;
-        margin-bottom: 5px;
-    }
-    .issue-perview_info {
-        color: #767676;
-        font-size: .9em;
-    }
-    
-    .page-selected {
-        font-weight: bold;
-    }
-    
-    .issue-list-container {
-        position: relative;
-    }
-    
-    .loading-screen {
-        position: absolute;
-        z-index: 1100;
-        background-color: #fff;
-        opacity: .9;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-         
-    `
-    ]
+    styleUrls: [`app/github-issues/search-results/search-results.components.css`]
 })
 export class SearchResultsComponent {
     @Input() set results(value: IIssuesResponse) {

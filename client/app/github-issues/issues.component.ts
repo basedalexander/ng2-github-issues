@@ -21,13 +21,12 @@ import {
 @Component({
     selector: 'github-issues',
     template: `
+
+    <button (click)="print()">print this</button>
     <div class="app-container">
-    
-        <button (click)="onPrint()">Print searchdata</button>
-        
         <search-box
             (searchDataChanged)="onSearchDataChanged($event)"
-            (searchSubmitted)="searchForData()">
+            (searchSubmitted)="onSearchSubmitted()">
         </search-box>
         
         <results-per-page-control
@@ -59,7 +58,7 @@ import {
     }
     
     search-box,
-    page-limit-controll,
+    results-per-page-control,
     spinner {
         border: 1px solid transparent;
         margin-bottom: 20px;
@@ -70,10 +69,9 @@ import {
 })
 export class GithubIssuesComponent {
 
-    onPrint(): void {
-        console.log(this.searchData, typeof this.searchData);
+    print() {
+        console.log(this);
     }
-
     constructor(private issuesService: GithubIssuesModel,
                 private logger: LoggerService) {
         this.loading = false;
@@ -87,30 +85,33 @@ export class GithubIssuesComponent {
     }
 
     protected searchForData(pageNumber?: number): void {
+        this.loading = true;
+
         this.issuesService.fetch(this.searchData, this.resultsPerPage, pageNumber)
             .subscribe(
                 data => {
+                    this.loading = false;
                     this.results = data;
-                    this.logger.log(this.results);
                 },
                 error => {
+                    this.loading = false;
                     this.results = undefined;
                     this.showError(`Can't load issues for specified fields`, error.stack);
-                },
-                () => {
-                    this.loading = false;
                 }
             );
     }
 
-    protected onPageSelected(pageNum: number): void {
+    protected onSearchSubmitted(): void {
         this.loading = true;
+        this.searchForData();
+    }
+
+    protected onPageSelected(pageNum: number): void {
         this.searchForData(pageNum);
     }
 
-    protected showError(message: string, stack: any): void {
+    protected showError(message: string, stack: string): void {
         this.error = new Notification('error', message + `\n\n ${stack}`);
-        this.logger.error(message, stack);
     }
 
     private error: INotification;

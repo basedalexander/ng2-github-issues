@@ -21,23 +21,18 @@ export class Notification implements INotification {
          {{_notification?.message}}
     </div>
     `,
-    styleUrls: [
-        '../..//components/notification/notification.component.css'
-    ]
+    styleUrls: ['app/common/components/notification/notification.component.css']
 })
 export class NotificationComponent {
 
     @Input() set notification(value: INotification) {
         if (value) {
-			if (this.active) {
-				this.close();
-			}
+            if (this.active) {
+                this.close();
+            }
 
-			this.open(value);
+            this.open(value);
         }
-		else {
-			return;
-		}
     }
 
     protected _notification: INotification;

@@ -83,19 +83,6 @@ export class PaginationComponent {
     constructor(private paginationService: PaginationService) {
     }
 
-    private firstPage: number;
-    private lastPage: number;
-    private currentPage: number;
-    private pager: number[] = [];
-
-    private init(link: ILink): void {
-        this.currentPage = this.paginationService.getCurrentPage(link);
-        this.pager = this.paginationService.generatePager(link);
-
-        this.firstPage = FIRST_PAGE;
-        this.lastPage = this.paginationService.getLastPage(link);
-    }
-
     protected isPageCurrent(pageNum: number): boolean {
         return pageNum === this.currentPage;
     }
@@ -130,6 +117,19 @@ export class PaginationComponent {
         if (this.isPrevAvailable()) {
             this.goPrev();
         }
+    }
+
+    private firstPage: number;
+    private lastPage: number;
+    private currentPage: number;
+    private pager: number[] = [];
+
+    private init(link: ILink): void {
+        this.currentPage = this.paginationService.getCurrentPage(link);
+        this.pager = this.paginationService.generatePager(link);
+
+        this.firstPage = FIRST_PAGE;
+        this.lastPage = this.paginationService.getLastPage(link);
     }
 
     private goNext(): void {

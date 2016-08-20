@@ -6,11 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { GithubIssuesComponent } from './github-issues/issues.component';
-import { IssueDetailsComponent } from './github-issues/issue-details.component';
-import { AboutComponent } from './about/about.component';
-import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
     imports: [
@@ -21,11 +17,7 @@ import { ContactsComponent } from './contacts/contacts.component';
     ],
     declarations: [
         AppComponent,
-        HomeComponent,
-        AboutComponent,
-        ContactsComponent,
-        GithubIssuesComponent,
-        IssueDetailsComponent
+        GithubIssuesComponent
     ],
     bootstrap: [AppComponent]
 })
