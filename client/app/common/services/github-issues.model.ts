@@ -13,8 +13,13 @@ export interface IIssuesResponse {
     data: Object[];
 }
 
+export interface ISearchData {
+    user: string;
+    repo: string;
+}
+
 @Injectable()
-export class IssuesService {
+export class GithubIssuesModel {
     constructor(private http: Http,
                 private headersParser: HeadersParserService) {
 
@@ -25,7 +30,8 @@ export class IssuesService {
     limitPerPageDefault: number;
     pageNumberDefault: number;
 
-    fetch(searchData, pageNumber?: number, limit?: number): Observable<IIssuesResponse> {
+    fetch(searchData: ISearchData, pageNumber?: number, limit?: number): Observable<IIssuesResponse> {
+
         const url = this.createUrl(searchData, pageNumber, limit);
 
         return this.http.get(url)

@@ -5,7 +5,7 @@ import {
     EventEmitter
 } from '@angular/core';
 
-import { ILink } from '../../../shared/services/headers-parser.service';
+import { ILink } from '../../../common/services/headers-parser.service';
 import { PaginationService } from './pagination.service';
 
 @Component({
@@ -66,12 +66,9 @@ import { PaginationService } from './pagination.service';
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
-        
     </ul>
     `,
-    styleUrls: [
-    'app/issues/search-results/pagination/pagination.component.css'
-    ],
+    styleUrls: [`app/github-issues/search-results/pagination/pagination.component.css`],
     providers: [PaginationService]
 })
 export class PaginationComponent {
@@ -80,7 +77,7 @@ export class PaginationComponent {
         this.init(value);
     }
 
-    @Output() pageChoosen: EventEmitter<number> = new EventEmitter<number>();
+    @Output() pageSelected: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(private paginationService: PaginationService) {
     }
@@ -93,35 +90,35 @@ export class PaginationComponent {
         this.pager = this.paginationService.generatePager(link);
     }
 
-    private goNext(): void {
+    protected goNext(): void {
         this.goToPage(this.currentPage + 1);
     }
 
-    private goPrev(): void {
+    protected goPrev(): void {
         this.goToPage(this.currentPage - 1);
     }
 
-    private goFirst(): void {
+    protected goFirst(): void {
         this.goToPage(this.pager[0]);
     }
 
-    private goLast(): void {
+    protected isPageCurrent(pageNum: number): boolean {
+        return pageNum === this.currentPage;
+    }
+
+    protected isPrevAvailable(): boolean {
+        return this.paginationService.isPrevAvailable(this.pager, this.currentPage);
+    }
+
+    protected isNextAvailable(): boolean {
+        return this.paginationService.isNextAvailable(this.pager, this.currentPage);
+    }
+
+    protected goLast(): void {
         this.goToPage(this.pager[this.pager.length - 1]);
     }
 
     private goToPage(pageNum: number): void {
-        this.pageChoosen.emit(pageNum);
-    }
-
-    private isPageCurrent(pageNum: number): boolean {
-        return pageNum === this.currentPage;
-    }
-
-    private isPrevAvailable(): boolean {
-        return this.paginationService.isPrevAvailable(this.pager, this.currentPage);
-    }
-
-    private isNextAvailable(): boolean {
-        return this.paginationService.isNextAvailable(this.pager, this.currentPage);
+        this.pageSelected.emit(pageNum);
     }
 }

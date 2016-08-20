@@ -1,5 +1,5 @@
 import { PaginationService } from './pagination.service';
-import { ILink } from '../../../shared/services/headers-parser.service';
+import { ILink } from '../../../common/services/headers-parser.service';
 
 describe('PaginationService', () => {
     let paginationService: PaginationService;
@@ -26,7 +26,7 @@ describe('PaginationService', () => {
         expect(paginationService.getCurrentPage(link)).toEqual(10);
     });
 
-    describe('generatePager', () => {
+    describe('generatePager within 10 pages', () => {
         const PAGES_NUM: number = 10;
         let link: ILink;
 
@@ -70,13 +70,75 @@ describe('PaginationService', () => {
             expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
         });
 
-        xit(`for the 6th page of ${PAGES_NUM}`, () => {
+        it(`for the 6th page of ${PAGES_NUM}`, () => {
             link = {
                 prev: 5,
                 last: PAGES_NUM
             };
             expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
         });
+
+        it(`for the 7th page of ${PAGES_NUM}`, () => {
+            link = {
+                prev: 6,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
+        });
+
+        it(`for the 8th page of ${PAGES_NUM}`, () => {
+            link = {
+                prev: 7,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
+        });
+
+        it(`for the 9th page of ${PAGES_NUM}`, () => {
+            link = {
+                prev: 8,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
+        });
+
+        it(`for the 10th page of ${PAGES_NUM}`, () => {
+            link = {
+                prev: 9,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
+        });
+    });
+
+    describe('generatePager within 20 pages', () => {
+        const PAGES_NUM: number = 20;
+        let link: ILink;
+
+        it(`for the 5st page of ${PAGES_NUM}`, () => {
+            link = {
+                next: 6,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(1));
+        });
+
+        it(`for the 8st page of ${PAGES_NUM}`, () => {
+            link = {
+                next: 9,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(3));
+        });
+
+        it(`for the 18st page of ${PAGES_NUM}`, () => {
+            link = {
+                next: 19,
+                last: PAGES_NUM
+            };
+            expect(paginationService.generatePager(link)).toEqual(createArrayOfNumbers(10));
+        });
+
     });
 
     describe('isPrevAvailable', () => {
@@ -112,7 +174,7 @@ function createArrayOfNumbers(num: number, length: number = 10): number[] {
     let arr = [];
     let startNumber: number = num;
 
-    for( let i = 0; i < length; i++) {
+    for ( let i = 0; i < length; i++) {
         arr.push(startNumber++);
     }
 

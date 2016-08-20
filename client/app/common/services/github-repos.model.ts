@@ -5,10 +5,10 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { IRepository } from './search-box.component';
+import { IRepository } from '../../github-issues/search-box/search-box.component';
 
 @Injectable()
-export class GithubReposSearchService {
+export class GithubReposModel {
 
     constructor(private http: Http) {
     }

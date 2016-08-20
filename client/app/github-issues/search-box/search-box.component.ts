@@ -4,8 +4,12 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { GithubReposSearchService } from './github-repos.service';
-import { LoggerService } from '../../shared/services/logger.service';
+
+import {
+    GithubReposModel,
+    LoggerService,
+    ISearchData
+} from 'common/services';
 
 export interface IRepositoryData {
     user: string;
@@ -25,6 +29,7 @@ export interface IRepository {
         <label class="sr-only" for="exampleInputEmail3">Email address</label>
         <input
             [(ngModel)]="searchData.user"
+            (change)="onSearchDataChanged()"
             name="user"
             type="text"
             #user
@@ -38,13 +43,14 @@ export interface IRepository {
         <label class="sr-only" for="exampleInputPassword3">Password</label>
         <input
             [(ngModel)]="searchData.repo"
+            (change)="onSearchDataChanged()"
             name="reposName"
             type="text"
             class="form-control"
             placeholder="Repository">
       </div>
       
-      <button (click)="onSearchPressed()" class="btn btn-default">Search</button>
+      <button (click)="submitSearch()" class="btn btn-default">Search</button>
     </form>
     
     <div>
@@ -52,14 +58,14 @@ export interface IRepository {
             <li
                 *ngFor="let repo of suggestions"
                 class="search-suggestion-item"
-                (click)="chooseRepo(repo.name)">
+                (click)="selectRepo(repo.name)">
                 /{{repo.name}}
             </li> 
         </ul>
     </div>
     `,
     styles: [
-    `
+        `
     .search-suggestion-list {
         margin: 0;
         padding: 0;
@@ -82,29 +88,40 @@ export interface IRepository {
     }
     `
     ],
-    providers: [GithubReposSearchService]
+    providers: [GithubReposModel]
 })
 export class SearchBoxComponent {
-    @Input() searchData: IRepositoryData;
-
-    @Output() searchDataChanged: EventEmitter<IRepositoryData> = new EventEmitter<IRepositoryData>();
+    @Output() searchDataChanged: EventEmitter<ISearchData> = new EventEmitter<ISearchData>();
 
     @Output() searchSubmitted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(private githubRepos: GithubReposSearchService,
+    constructor(private githubRepos: GithubReposModel,
                 private logger: LoggerService) {
     }
 
+    ngOnInit() {
+        this.searchData = this.SEARCH_DATA_DEFAULT;
+        this.onSearchDataChanged();
+    }
+
+    protected SEARCH_DATA_DEFAULT: ISearchData = {
+        user: 'thohoh',
+        repo: 'metadata'
+    };
+
     protected suggestions: IRepository[] = [];
 
-    protected chooseRepo(repoName: string): void {
+    protected selectRepo(repoName: string): void {
         this.clearSuggestions();
         this.searchData.repo = repoName;
     }
 
-    protected onSearchPressed(): void {
-        this.searchDataChanged.emit(this.searchData);
+    protected submitSearch(): void {
         this.searchSubmitted.emit(true);
+    }
+
+    protected onSearchDataChanged(): void {
+         this.searchDataChanged.emit(this.searchData);
     }
 
     protected searchForSuggestion(user: string): void {
@@ -133,4 +150,7 @@ export class SearchBoxComponent {
     private clearSuggestions(): void {
         this.suggestions = [];
     }
+
+    private searchData: ISearchData;
+
 }

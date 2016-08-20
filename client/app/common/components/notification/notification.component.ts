@@ -22,7 +22,7 @@ export class Notification implements INotification {
     </div>
     `,
     styleUrls: [
-        'app/shared/components/notification/notification.component.css'
+        '../..//components/notification/notification.component.css'
     ]
 })
 export class NotificationComponent {

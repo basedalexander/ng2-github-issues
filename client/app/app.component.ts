@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutletMap, Router } from '@angular/router';
 
-import { IssuesService } from './shared/services/github-issues.service';
-import { GithubIssuesComponent } from './issues/issues.component';
-import { HeadersParserService } from './shared/services/headers-parser.service';
-import { LoggerService } from './shared/services/logger.service';
+import { GithubIssuesModel } from './common/services/github-issues.model';
+import { GithubIssuesComponent } from './github-issues/issues.component';
+import { HeadersParserService } from './common/services/headers-parser.service';
+import { LoggerService } from './common/services/logger.service';
 
 import { appRouterProviders } from './app.routes';
 
@@ -18,7 +18,7 @@ import { appRouterProviders } from './app.routes';
             </li>
 
             <li class='nav-list_item'>
-                <a class='nav-link' routerLink="issues" routerLinkActive="active">Issues</a>
+                <a class='nav-link' routerLink="github-issues" routerLinkActive="active">Issues</a>
             </li>
 
             <li class='nav-list_item'>
@@ -37,7 +37,7 @@ import { appRouterProviders } from './app.routes';
     
     `,
     providers: [
-        IssuesService,
+        GithubIssuesModel,
         HeadersParserService,
         LoggerService,
         RouterOutletMap,

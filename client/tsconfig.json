@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "shared/*": ["./app/shared/*"]
+      "common/*": ["./app/common/*"]
     },
     "target": "es5",
     "module": "commonjs",

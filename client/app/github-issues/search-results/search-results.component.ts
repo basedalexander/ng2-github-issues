@@ -2,13 +2,12 @@ import {
     Component,
     Input,
     Output,
-    EventEmitter,
-    ViewChild
+    EventEmitter
 } from '@angular/core';
 
 import { PaginationComponent } from './pagination/pagination.component';
-import { IIssuesResponse } from '../../shared/services/github-issues.service';
-import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
+import { IIssuesResponse } from '../../common/services/github-issues.model';
+import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
 import { SearchResultsService } from './search.results.service';
 
 @Component({
@@ -44,7 +43,7 @@ import { SearchResultsService } from './search.results.service';
         <pagination
             *ngIf="_results.link"
             [link]="_results.link"
-            (pageChoosen)="onPageChoosen($event)">
+            (pageSelected)="onPageSelected($event)">
         </pagination>
     </div> 
     `,
@@ -120,7 +119,7 @@ export class SearchResultsComponent {
         this._results = value;
     }
 
-    @Output() pageChoosen: EventEmitter<number> = new EventEmitter<number>();
+    @Output() pageSelected: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(private searchResultsService: SearchResultsService) {
     }
@@ -129,13 +128,13 @@ export class SearchResultsComponent {
         return this._results;
     }
 
+    protected onPageSelected(pageNum: number): void {
+        this.loading = true;
+        this.searchResultsService.scrollToTop();
+        this.pageSelected.emit(pageNum);
+    }
+
     private loading: boolean = false;
 
     private _results: IIssuesResponse;
-
-    private onPageChoosen(pageNum: number): void {
-        this.searchResultsService.scrollToTop();
-        this.loading = true;
-        this.pageChoosen.emit(pageNum);
-    }
 }

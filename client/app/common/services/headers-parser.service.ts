@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { isPresent } from 'shared/utils';
+import { isPresent } from 'common/utils';
 
 export interface IResponseHeaders {
     _headersMap: Map<string, Array<string>>;
@@ -21,7 +21,6 @@ const LINK_HEADER_NAME = 'link';
 
 @Injectable()
 export class HeadersParserService {
-
 
     parse(headers: Object): IParsedHeaders {
         let linkHeader = headers['_headersMap'].get(LINK_HEADER_NAME);
