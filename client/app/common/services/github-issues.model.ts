@@ -22,17 +22,11 @@ export interface ISearchData {
 export class GithubIssuesModel {
     constructor(private http: Http,
                 private headersParser: HeadersParserService) {
-
-        this.pageNumberDefault = 1;
-        this.limitPerPageDefault = 10;
     }
 
-    limitPerPageDefault: number;
-    pageNumberDefault: number;
+    fetch(searchData: ISearchData, resultsPerPage: number, pageNumber: number): Observable<IIssuesResponse> {
 
-    fetch(searchData: ISearchData, pageNumber?: number, limit?: number): Observable<IIssuesResponse> {
-
-        const url = this.createUrl(searchData, pageNumber, limit);
+        const url = this.createUrl(searchData, resultsPerPage, pageNumber);
 
         return this.http.get(url)
             .map((res: Response) => {
@@ -45,7 +39,7 @@ export class GithubIssuesModel {
             .catch(err => Observable.throw(err));
     }
 
-    private createUrl(searchData, pageNumber: number = this.pageNumberDefault, limit: number = this.limitPerPageDefault): string {
-        return `${ENDPOINT}${searchData.user}/${searchData.repo}/issues?page=${pageNumber}&per_page=${this.limitPerPageDefault}`;
+    private createUrl(searchData, resultsPerPage: number, pageNumber: number = 1): string {
+        return `${ENDPOINT}${searchData.user}/${searchData.repo}/issues?page=${pageNumber}&per_page=${resultsPerPage}`;
     }
 }

@@ -31,7 +31,7 @@ import {
         </search-box>
         
         <results-per-page-control
-           [(value)]="resultsPerPage">
+           (valueChange)="onResultsPerPageChanged($event)">
         </results-per-page-control>
         
         <notification [notification]="error"></notification>
@@ -82,13 +82,12 @@ export class GithubIssuesComponent {
     protected onSearchDataChanged(value: ISearchData): void {
         this.searchData = value;
     }
-
     protected onResultsPerPageChanged(value: number): void {
         this.resultsPerPage = value;
     }
 
     protected searchForData(pageNumber?: number): void {
-        this.issuesService.fetch(this.searchData, pageNumber)
+        this.issuesService.fetch(this.searchData, this.resultsPerPage, pageNumber)
             .subscribe(
                 data => {
                     this.results = data;
@@ -116,7 +115,7 @@ export class GithubIssuesComponent {
 
     private error: INotification;
     private searchData: ISearchData;
-    private resultsPerPage: number = 12;
+    private resultsPerPage: number;
     private results: IIssuesResponse;
     private loading: boolean;
 }

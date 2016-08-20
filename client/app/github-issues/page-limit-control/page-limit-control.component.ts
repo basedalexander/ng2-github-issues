@@ -2,7 +2,6 @@ import {
     Component,
     EventEmitter,
     Output,
-    Input,
     OnInit
 } from '@angular/core';
 
@@ -15,7 +14,7 @@ import {
             <label for="selectbox-per-page">Results per page</label>
             <select class="form-control"
                 name="currentLimit"
-                [value]="_value" 
+                [value]="currentLimit" 
                 #select
                 id="selectbox-per-page"
                 (change)="onChange(select.value)">
@@ -26,9 +25,6 @@ import {
     `
 })
 export class ResultsPerPageControl implements OnInit {
-    @Input() set value(value: number) {
-        this._value = value;
-    }
     @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
     ngOnInit() {
@@ -45,6 +41,7 @@ export class ResultsPerPageControl implements OnInit {
         ];
 
         this.currentLimit = this.allLimits[5];
+        this.onChange(this.currentLimit);
     }
 
     protected currentLimit: number;
@@ -53,6 +50,4 @@ export class ResultsPerPageControl implements OnInit {
     protected onChange(value: number): void {
        this.valueChange.emit(value);
     }
-
-    private _value: number;
 }
