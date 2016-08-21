@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { PaginationComponent } from './pagination/pagination.component';
-import { IIssuesResponse } from '../../common/services/github-issues.model';
+import { IIssuesResponse } from '../../common/services/github-data.service';
 import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
 import { SearchResultsService } from './search.results.service';
 

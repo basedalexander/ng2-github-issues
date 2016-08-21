@@ -5,19 +5,11 @@ import {
 } from '@angular/core';
 
 import {
-    GithubReposModel,
+    GithubDataService,
     LoggerService,
-    ISearchData
+    IIssuesSearchData,
+    IRepositorySearchData
 } from 'common/services';
-
-export interface IRepositoryData {
-    user: string;
-    repo: string;
-}
-
-export interface IRepository {
-    name: string;
-}
 
 @Component({
     selector: 'search-box',
@@ -90,14 +82,14 @@ export interface IRepository {
     }
     `
     ],
-    providers: [GithubReposModel]
+    providers: [GithubDataService]
 })
 export class SearchBoxComponent {
-    @Output() searchDataChanged: EventEmitter<ISearchData> = new EventEmitter<ISearchData>();
+    @Output() searchDataChanged: EventEmitter<IIssuesSearchData> = new EventEmitter<IIssuesSearchData>();
 
     @Output() searchSubmitted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(private githubRepos: GithubReposModel,
+    constructor(private githubDataService: GithubDataService,
                 private logger: LoggerService) {
     }
 
@@ -106,12 +98,12 @@ export class SearchBoxComponent {
         this.onSearchDataChanged();
     }
 
-    protected DEFAULT_SEARCH_DATA: ISearchData = {
+    protected DEFAULT_SEARCH_DATA: IIssuesSearchData = {
         user: 'angular',
         repo: 'angular'
     };
 
-    protected suggestions: IRepository[] = [];
+    protected suggestions: IRepositorySearchData[] = [];
 
     protected selectRepo(repoName: string): void {
         this.searchData.repo = repoName;
@@ -132,7 +124,7 @@ export class SearchBoxComponent {
             return;
         }
 
-        this.githubRepos.searchByUser(user)
+        this.githubDataService.getRepos(user)
             .subscribe(
                 data => {
                     this.suggestions = data;
@@ -156,6 +148,6 @@ export class SearchBoxComponent {
         this.suggestions = [];
     }
 
-    private searchData: ISearchData;
+    private searchData: IIssuesSearchData;
 
 }

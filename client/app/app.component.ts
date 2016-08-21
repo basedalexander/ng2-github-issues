@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutletMap, Router } from '@angular/router';
 
 import {
-    GithubIssuesModel,
+    GithubDataService,
     HeadersParserService,
     LoggerService
 } from 'common/services';
 
 import { GithubIssuesComponent } from './github-issues/issues.component';
-import { appRouterProviders } from './app.routes';
 
 @Component({
     selector: 'app',
@@ -19,25 +17,14 @@ import { appRouterProviders } from './app.routes';
     </div>
     `,
     providers: [
-        GithubIssuesModel,
+        GithubDataService,
         HeadersParserService,
-        LoggerService,
-        RouterOutletMap,
-        appRouterProviders
+        LoggerService
     ],
     directives: [
         GithubIssuesComponent
     ]
 })
 export class AppComponent {
-    constructor(private router: Router) {
-    }
 
-    printThis() {
-        console.log(this);
-    }
-
-    ngOnInit() {
-        this.router.navigateByUrl('/github-issues');
-    }
 }

@@ -1,4 +1,3 @@
-export * from './github-issues.model';
-export * from './github-repos.model';
+export * from './github-data.service';
 export * from './headers-parser.service';
 export * from './logger.service';

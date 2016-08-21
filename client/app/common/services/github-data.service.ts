@@ -13,19 +13,22 @@ export interface IIssuesResponse {
     data: Object[];
 }
 
-export interface ISearchData {
+export interface IIssuesSearchData {
     user: string;
     repo: string;
 }
 
+export interface IRepositorySearchData {
+    name: string;
+}
+
 @Injectable()
-export class GithubIssuesModel {
+export class GithubDataService {
     constructor(private http: Http,
                 private headersParser: HeadersParserService) {
     }
 
-    fetch(searchData: ISearchData, resultsPerPage: number, pageNumber: number): Observable<IIssuesResponse> {
-
+    getIssues(searchData: IIssuesSearchData, resultsPerPage: number, pageNumber: number): Observable<IIssuesResponse> {
         const url = this.createUrl(searchData, resultsPerPage, pageNumber);
 
         return this.http.get(url)
@@ -39,7 +42,15 @@ export class GithubIssuesModel {
             .catch(err => Observable.throw(err));
     }
 
+    // TODO create url creator
     private createUrl(searchData, resultsPerPage: number, pageNumber: number = 1): string {
         return `${ENDPOINT}${searchData.user}/${searchData.repo}/issues?page=${pageNumber}&per_page=${resultsPerPage}`;
+    }
+
+    getRepos(user: string): Observable<IRepositorySearchData[]> {
+        let url: string = `https://api.github.com/users/${user}/repos`;
+
+        return this.http.get(url)
+            .map(res => res.json());
     }
 }

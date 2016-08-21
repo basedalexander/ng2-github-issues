@@ -5,10 +5,9 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { ResultsPerPageControl } from './page-limit-control/page-limit-control.component';
 
 import {
-    GithubIssuesModel,
+    GithubDataService,
     IIssuesResponse,
-    LoggerService,
-    ISearchData
+    IIssuesSearchData
 } from 'common/services';
 
 import {
@@ -72,12 +71,12 @@ export class GithubIssuesComponent {
     print() {
         console.log(this);
     }
-    constructor(private issuesService: GithubIssuesModel,
-                private logger: LoggerService) {
+
+    constructor(private issuesService: GithubDataService) {
         this.loading = false;
     }
 
-    protected onSearchDataChanged(value: ISearchData): void {
+    protected onSearchDataChanged(value: IIssuesSearchData): void {
         this.searchData = value;
     }
     protected onResultsPerPageChanged(value: number): void {
@@ -87,7 +86,7 @@ export class GithubIssuesComponent {
     protected searchForData(pageNumber?: number): void {
         this.loading = true;
 
-        this.issuesService.fetch(this.searchData, this.resultsPerPage, pageNumber)
+        this.issuesService.getIssues(this.searchData, this.resultsPerPage, pageNumber)
             .subscribe(
                 data => {
                     this.loading = false;
@@ -115,7 +114,7 @@ export class GithubIssuesComponent {
     }
 
     private error: INotification;
-    private searchData: ISearchData;
+    private searchData: IIssuesSearchData;
     private resultsPerPage: number;
     private results: IIssuesResponse;
     private loading: boolean;
