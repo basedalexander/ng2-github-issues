@@ -6,23 +6,17 @@ import {
     LoggerService
 } from 'common/services';
 
-import { GithubIssuesComponent } from './github-issues/issues.component';
-
 @Component({
     selector: 'app',
     template: `
-    <a routerLink="dick-big" routerLinkActive="active">dick</a>
     <div>
-        <router-outlet></router-outlet>
+        <github-page></github-page>
     </div>
     `,
     providers: [
         GithubDataService,
         HeadersParserService,
         LoggerService
-    ],
-    directives: [
-        GithubIssuesComponent
     ]
 })
 export class AppComponent {

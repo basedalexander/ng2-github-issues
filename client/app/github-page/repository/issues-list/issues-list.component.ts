@@ -6,12 +6,13 @@ import {
 } from '@angular/core';
 
 import { PaginationComponent } from './pagination/pagination.component';
-import { IIssuesResponse } from '../../common/services/github-data.service';
-import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
-import { SearchResultsService } from './search.results.service';
+import { IIssuesResponse } from 'common/services';
+import { SpinnerComponent } from 'common/components';
+import { IssuesListService } from './issues-list.service';
 
 @Component({
     selector: 'search-results',
+    moduleId: module.id,
     template: `
     <div>
         <div class="issues-header" id="issues-header">
@@ -48,10 +49,10 @@ import { SearchResultsService } from './search.results.service';
     </div> 
     `,
     directives: [PaginationComponent, SpinnerComponent],
-    providers: [SearchResultsService],
-    styleUrls: [`app/github-issues/search-results/search-results.components.css`]
+    providers: [IssuesListService],
+    styleUrls: [`./issues-list.component.css`]
 })
-export class SearchResultsComponent {
+export class IssuesListComponent {
     @Input() set results(value: IIssuesResponse) {
         this.loading = false;
         this._results = value;
@@ -59,7 +60,7 @@ export class SearchResultsComponent {
 
     @Output() pageSelected: EventEmitter<number> = new EventEmitter<number>();
 
-    constructor(private searchResultsService: SearchResultsService) {
+    constructor(private searchResultsService: IssuesListService) {
     }
 
     get results(): IIssuesResponse {

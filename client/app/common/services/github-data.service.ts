@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 
 import { HeadersParserService, ILink } from './headers-parser.service';
 
-const ENDPOINT = 'https://api.github.com/repos/';
+const ENDPOINT = 'https://api.github-page.com/repos/';
 
 export interface IIssuesResponse {
     link: ILink;

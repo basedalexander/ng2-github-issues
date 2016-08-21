@@ -5,76 +5,19 @@ import {
     EventEmitter
 } from '@angular/core';
 
-import { ILink } from '../../../common/services/headers-parser.service';
+import { ILink } from 'common/services';
 import { PaginationService, FIRST_PAGE } from './pagination.service';
 
 @Component({
     selector: 'pagination',
-    template: `
-    <ul class="pagination">
-        <li>
-          <a
-            aria-label="First"
-            class="pagination-control-btn"
-            [class.available]="isPrevAvailable()"
-            (click)="onFirstClicked()"
-            title="First page">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        
-        <li>
-          <a
-            aria-label="Previous"
-            class="pagination-control-btn"
-            [class.available]="isPrevAvailable()"
-            (click)="onPrevClicked()"
-            title="Prev page">
-            <span aria-hidden="true">&larr;</span>
-          </a>
-        </li>
-        
-        <li
-            *ngFor="let page of pager"
-            [class.page-current]="isPageCurrent(page)">
-            <a
-                class='pagination-page'
-                (click)="goToPage(page)"
-                title="Page">
-                {{page}}
-            </a>
-        </li>
-        
-        <li>
-          <a    
-            aria-label="Next"
-            class="pagination-control-btn"
-            [class.available]="isNextAvailable()"
-            (click)="onNextClicked()"
-            title="Next page">
-            <span aria-hidden="true">&rarr;</span>
-          </a>
-        </li>
-        
-        <li>
-          <a
-            aria-label="Last"
-            class="pagination-control-btn"
-            [class.available]="isNextAvailable()"
-            (click)="onLastClicked()"
-            title="Last page">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-    </ul>
-    `,
-    styleUrls: [`app/github-issues/search-results/pagination/pagination.component.css`],
+    moduleId: module.id,
+    templateUrl: `./pagination.component.html`,
+    styleUrls: [`./pagination.component.css`],
     providers: [PaginationService]
 })
 export class PaginationComponent {
 
     @Input() set link(value: ILink) {
-
         this.init(value);
     }
 

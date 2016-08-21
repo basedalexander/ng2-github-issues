@@ -5,22 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { GithubIssuesComponent } from './github-issues/issues.component';
-import { GithubIssueDetailsComponent } from './github-issue-details/github-issue-details.component';
+import { RepositoryComponent } from './github-page/repository/repository.component';
 
 import { routing, appRoutingProviders } from './app.routing';
+import { GithubPageModule } from './github-page/github-page.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        routing
+        GithubPageModule
     ],
     declarations: [
-        AppComponent,
-        GithubIssuesComponent,
-        GithubIssueDetailsComponent
+        AppComponent
     ],
     providers: [
         appRoutingProviders

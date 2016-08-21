@@ -1,11 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { GithubIssuesComponent } from './github-issues/issues.component';
-import { GithubIssueDetailsComponent } from './github-issue-details/github-issue-details.component';
+import { RepositoryComponent } from './github-page/repository/repository.component';
 
 const appRoutes: Routes = [
-    { path: 'github-issues', component: GithubIssuesComponent },
-    { path: 'dick-big', component: GithubIssueDetailsComponent }
+    { path: 'github-issues', component: RepositoryComponent }
 ];
 
 export const appRoutingProviders: any[] = [

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { SearchBoxComponent } from './search-box/search-box.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
+import { IssuesListComponent } from './issues-list/issues-list.component';
 import { ResultsPerPageControl } from './page-limit-control/page-limit-control.component';
 
 import {
@@ -20,8 +20,6 @@ import {
 @Component({
     selector: 'github-issues',
     template: `
-
-    <button (click)="print()">print this</button>
     <div class="app-container">
         <search-box
             (searchDataChanged)="onSearchDataChanged($event)"
@@ -45,7 +43,7 @@ import {
     `,
     directives: [
         SearchBoxComponent,
-        SearchResultsComponent,
+        IssuesListComponent,
         ResultsPerPageControl,
         SpinnerComponent,
         NotificationComponent
@@ -66,12 +64,7 @@ import {
     `
     ]
 })
-export class GithubIssuesComponent {
-
-    print() {
-        console.log(this);
-    }
-
+export class RepositoryComponent {
     constructor(private issuesService: GithubDataService) {
         this.loading = false;
     }
@@ -79,6 +72,7 @@ export class GithubIssuesComponent {
     protected onSearchDataChanged(value: IIssuesSearchData): void {
         this.searchData = value;
     }
+
     protected onResultsPerPageChanged(value: number): void {
         this.resultsPerPage = value;
     }

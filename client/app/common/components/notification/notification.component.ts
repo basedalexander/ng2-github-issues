@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import Timer = NodeJS.Timer;
 
 export type NotificationType = 'success' | 'warning' | 'error';
 
@@ -15,13 +16,14 @@ export class Notification implements INotification {
 
 @Component({
     selector: 'notification',
+    moduleId: module.id,
     template: `
     <div *ngIf="active"
         class="notification-box notification-{{_notification?.type}}">
          {{_notification?.message}}
     </div>
     `,
-    styleUrls: ['app/common/components/notification/notification.component.css']
+    styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent {
 
@@ -38,7 +40,7 @@ export class NotificationComponent {
     protected _notification: INotification;
 
     private active: boolean = false;
-    private timeoutId: number;
+    private timeoutId: Timer;
     private time: number = 6000;
 
     private open(notif: INotification): void {

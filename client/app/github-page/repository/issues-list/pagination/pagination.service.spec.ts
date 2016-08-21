@@ -1,5 +1,5 @@
 import { PaginationService } from './pagination.service';
-import { ILink } from '../../../common/services/headers-parser.service';
+import { ILink } from 'common/services';
 
 describe('PaginationService', () => {
     let paginationService: PaginationService;
